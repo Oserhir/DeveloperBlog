@@ -9,7 +9,7 @@ namespace TheBlogProject.Models
     {
         public int Id { get; set; }
         public int BlogId { get; set; }
-        public string AuthorId { get; set; }
+        public string BlogUserId { get; set; }
 
         [Required]
         [StringLength(75, ErrorMessage = "The {0} must be at least {2} and at most {1} characters", MinimumLength = 2)] // {0} Title {2} 2  {1} 75
@@ -45,7 +45,7 @@ namespace TheBlogProject.Models
 
         // 
         public virtual Blog Blog { get; set; }
-        public virtual IdentityUser Author { get; set; }
+        public virtual IdentityUser BlogUser { get; set; }
 
 
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();

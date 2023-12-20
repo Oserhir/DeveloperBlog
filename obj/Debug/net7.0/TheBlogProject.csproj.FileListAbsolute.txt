@@ -83,3 +83,5 @@ C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\refint\TheBlogProje
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\TheBlogProject.pdb
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\TheBlogProject.genruntimeconfig.cache
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\ref\TheBlogProject.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Npgsql.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
