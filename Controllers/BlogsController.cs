@@ -7,36 +7,49 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TheBlogProject.Data;
 using TheBlogProject.Models;
+using TheBlogProject.Services.Interfaces;
 
 namespace TheBlogProject.Controllers
 {
     public class BlogsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IBlogService _blogService;
 
-        public BlogsController(ApplicationDbContext context)
+        #region Constructor
+        public BlogsController(ApplicationDbContext context, IBlogService blogService)
         {
             _context = context;
-        }
+            _blogService = blogService;
+        } 
+        #endregion
 
+        #region // GET: Blogs
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Blogs.Include(b => b.BlogUser);
-            return View(await applicationDbContext.ToListAsync());
+            var applicationDbContext = _context.Blogs;
+            return View(applicationDbContext); // return View(await applicationDbContext.ToListAsync());
         }
 
+        #endregion
+
+        #region  // GET: Blogs/Details/5
         // GET: Blogs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Blogs == null)
+            if (id == null )
             {
                 return NotFound();
             }
 
-            var blog = await _context.Blogs
-                .Include(b => b.BlogUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var blog = await _context.Blogs
+            //    .Include(b => b.BlogUser)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+            Blog blog = await _blogService.GetBlogByIdAsync(id.Value);
+
+
             if (blog == null)
             {
                 return NotFound();
@@ -44,66 +57,91 @@ namespace TheBlogProject.Controllers
 
             return View(blog);
         }
+        #endregion
 
+        #region // GET: Blogs/Create
         // GET: Blogs/Create
         public IActionResult Create()
         {
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
+        #endregion
 
+        #region // POST: Blogs/Create
         // POST: Blogs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogUserId,Name,Description,Created,Updated,ImageData,ImageType")] Blog blog)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Blog blog)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(blog);
-                await _context.SaveChangesAsync();
+                blog.Created = DateTime.UtcNow;
+
+                //...
+
+                await _blogService.AddNewBlogAsync(blog);
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
             return View(blog);
         }
+        #endregion
 
+        #region // GET: Blogs/Edit/5
         // GET: Blogs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Blogs == null)
+            if (id == null )
             {
                 return NotFound();
             }
 
-            var blog = await _context.Blogs.FindAsync(id);
+            Blog blog = await _blogService.GetBlogByIdAsync(id.Value);
+
+
             if (blog == null)
             {
                 return NotFound();
             }
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
+
             return View(blog);
         }
+        #endregion
 
+        #region // POST: Blogs/Edit/5
         // POST: Blogs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogUserId,Name,Description,Created,Updated,ImageData,ImageType")] Blog blog)
+        public async Task<IActionResult> Edit( [Bind("Id,Name,Description")] Blog blog )
         {
-            if (id != blog.Id)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(blog);
-                    await _context.SaveChangesAsync();
+                    Blog newblog = await _blogService.GetBlogByIdAsync(blog.Id);
+
+                    newblog.Updated = DateTime.UtcNow;
+
+                    if (newblog.Name != blog.Name)
+                    {
+                        newblog.Name = blog.Name;
+                    }
+
+                    if (newblog.Description != blog.Description) 
+                    {
+                        newblog.Description = blog.Description;
+                    }
+
+                    //..
+
+                    await _blogService.UpdateBlogAsync(newblog);
+                  
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,21 +156,24 @@ namespace TheBlogProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
             return View(blog);
         }
+        #endregion
 
+        #region // GET: Blogs/Delete/5
         // GET: Blogs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Blogs == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var blog = await _context.Blogs
-                .Include(b => b.BlogUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var blog = await _blogService.GetBlogByIdAsync(id.Value);
+
+
             if (blog == null)
             {
                 return NotFound();
@@ -140,29 +181,32 @@ namespace TheBlogProject.Controllers
 
             return View(blog);
         }
+        #endregion
 
+        #region // POST: Blogs/Delete/5
         // POST: Blogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Blogs == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Blogs'  is null.");
-            }
-            var blog = await _context.Blogs.FindAsync(id);
+            Blog blog = await _blogService.GetBlogByIdAsync(id);
+
             if (blog != null)
             {
-                _context.Blogs.Remove(blog);
+                _blogService.RemoveBlogAsync(blog);
             }
-            
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region BlogExists
         private bool BlogExists(int id)
         {
-          return (_context.Blogs?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+            return (_context.Blogs?.Any(e => e.Id == id)).GetValueOrDefault();
+        } 
+        #endregion
     }
 }
