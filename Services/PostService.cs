@@ -21,9 +21,10 @@ namespace TheBlogProject.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<Post>> GetAllPostAsync()
+        public async Task<List<Post>> GetAllPostAsync()
         {
-            throw new NotImplementedException();
+            List<Post> post = await _context.Posts.ToListAsync();
+            return post;
         }
 
         public async Task<Post> GetPostByIdAsync(int PostId)
