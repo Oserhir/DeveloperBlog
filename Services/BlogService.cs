@@ -21,6 +21,13 @@ namespace TheBlogProject.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<Blog>> GetAllBlogsAsync()
+        {
+            List<Blog> blog = await _context.Blogs.ToListAsync(); 
+
+            return blog;
+        }
+
         public async Task<Blog> GetBlogByIdAsync(int BlogId)
         {
             Blog blog =  await _context.Blogs

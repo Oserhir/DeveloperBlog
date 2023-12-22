@@ -24,6 +24,7 @@ builder.Services.AddIdentity<BTUser, IdentityRole>(options => options.SignIn.Req
 
 // Custom Service
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<IPostService, PostService>();
 
 
 builder.Services.AddControllersWithViews();
