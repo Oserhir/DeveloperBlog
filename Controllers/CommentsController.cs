@@ -26,44 +26,60 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
-        #region // GET: Comments
+        #region // GET: Original Index 
+        // GET: Comments
+        public async Task<IActionResult> OriginalIndex()
+        {
+            var originalComment = _context.Comments.ToListAsync();
+            return View("Index" , await originalComment);
+        }
+        #endregion
+
+        #region // GET: Moderated Index 
+        // GET: Comments
+        public async Task<IActionResult> ModeratedIndex()
+        {
+            var ModeratedComment = await _context.Comments.Where( m => m.ModeratorId != null   ).ToListAsync();
+            return View("Index", ModeratedComment);
+        }
+        #endregion
+
+
+        #region // GET: Comments 
         // GET: Comments
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Comments.Include(p => p.BlogUser).Include(p => p.Post);
             return View(await applicationDbContext.ToListAsync());
         }
-        #endregion
+        #endregion 
 
-        #region // GET: Comments/Details/5
-        // GET: Comments/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if ( id == null )
-            {
-                return NotFound();
-            }
+        #region // GET: Comments/Details/5 --- NO
+        //// GET: Comments/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if ( id == null )
+        //    {
+        //        return NotFound();
+        //    }
 
-            var comment = _comment.GetCommentByIdAsync(id.Value);
+        //    var comment = _comment.GetCommentByIdAsync(id.Value);
 
-            if (comment == null)
-            {
-                return NotFound();
-            }
+        //    if (comment == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(comment);
-        }
+        //    return View(comment);
+        //}
         #endregion
 
         #region // GET: Comments/Create ------ NO
         // GET: Comments/Create
-        public IActionResult Create()
-        {
-            //ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
-           // ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
         #endregion
 
         #region // POST: Comments/Create
@@ -81,6 +97,7 @@ namespace TheBlogProject.Controllers
                 await _comment.AddNewCommentAsync(comment);
 
                 return RedirectToAction("Index", "Home");
+               
             }
 
             return View(comment);
