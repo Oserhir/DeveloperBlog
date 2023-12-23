@@ -27,10 +27,17 @@ builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 
+// Register my custom DataService class
+builder.Services.AddScoped<DataService>();
+
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Register class as a service (this is not constructor injection)
+var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataService>();
+await dataService.ManageDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
