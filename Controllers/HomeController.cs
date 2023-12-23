@@ -18,6 +18,20 @@ namespace TheBlogProject.Controllers
             return View();
         }
 
+        #region About
+        public IActionResult About()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Contact
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        #endregion
+
         public IActionResult Privacy()
         {
             return View();
