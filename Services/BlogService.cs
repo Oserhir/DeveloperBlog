@@ -8,10 +8,12 @@ namespace TheBlogProject.Services
     public class BlogService : IBlogService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IImageService _imageService;
 
-        public BlogService(ApplicationDbContext context)
+        public BlogService(ApplicationDbContext context, IImageService imageService )
         {
             _context = context;
+            _imageService = imageService;
         }
 
 

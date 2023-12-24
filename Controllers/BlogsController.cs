@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +17,17 @@ namespace TheBlogProject.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IBlogService _blogService;
+        private readonly UserManager<BTUser> _userManager;
+        private readonly IImageService _imageService;
 
         #region Constructor
-        public BlogsController(ApplicationDbContext context, IBlogService blogService)
+        public BlogsController(ApplicationDbContext context, IBlogService blogService, UserManager<BTUser> userManager, IImageService imageService)
         {
             _context = context;
             _blogService = blogService;
-        } 
+            _userManager = userManager;
+            _imageService = imageService;
+        }
         #endregion
 
         #region // GET: Blogs
@@ -59,6 +65,7 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
+        //[Authorize]
         #region // GET: Blogs/Create
         // GET: Blogs/Create
         public IActionResult Create()
@@ -73,11 +80,15 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description")] Blog blog)
+        public async Task<IActionResult> Create([Bind("Name,Description,Image")] Blog blog)
         {
             if (ModelState.IsValid)
             {
                 blog.Created = DateTime.UtcNow;
+                blog.BlogUserId = _userManager.GetUserId(User);
+
+                blog.ImageType = _imageService.ContentType(blog.Image);
+                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
 
                 //...
 
