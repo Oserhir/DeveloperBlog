@@ -5,6 +5,7 @@ using TheBlogProject.Data;
 using TheBlogProject.Models;
 using TheBlogProject.Services;
 using TheBlogProject.Services.Interfaces;
+using TheBlogProject.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,9 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 // Register my custom DataService class
 builder.Services.AddScoped<DataService>();
 
+// Register a preconfigured instance of the MailSettings class
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddScoped<IBlogEmailSender, EmailService>();
 
 builder.Services.AddControllersWithViews();
 

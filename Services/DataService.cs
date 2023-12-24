@@ -75,7 +75,7 @@ namespace TheBlogProject.Services
             // Administrator
             var adminUser = new BTUser
             {
-                Email = "admin@example.com",
+                Email = "spcolin11@gmail.com",
                 UserName = "adminUser",
                 FirstName = "Youssef",
                 LastName = "Doe",
@@ -92,7 +92,7 @@ namespace TheBlogProject.Services
             // Moderator
             var modUser = new BTUser
             {
-                Email = "moderator@example.com",
+                Email = "ptheblog@gmail.com",
                 UserName = "moderatorUser",
                 FirstName = "Alex",
                 LastName = "Smith",

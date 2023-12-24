@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using TheBlogProject.Models;
+using TheBlogProject.Services.Interfaces;
 
 namespace TheBlogProject.Areas.Identity.Pages.Account
 {
@@ -29,14 +30,16 @@ namespace TheBlogProject.Areas.Identity.Pages.Account
         private readonly IUserStore<BTUser> _userStore;
         private readonly IUserEmailStore<BTUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        //private readonly IEmailSender _emailSender;
+
+        private readonly IBlogEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<BTUser> userManager,
             IUserStore<BTUser> userStore,
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IBlogEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
