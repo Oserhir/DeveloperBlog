@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,13 +17,19 @@ namespace TheBlogProject.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IPostService _postService;
         private readonly IBlogService _BlogService;
+        private readonly ISlugService _slugService;
+        private readonly UserManager<BTUser> _userManager;
+        private readonly IImageService _imageService;
 
         #region Constructor
-        public PostsController(ApplicationDbContext context, IPostService postService, IBlogService blogService)
+        public PostsController(ApplicationDbContext context, IPostService postService, IBlogService blogService, ISlugService slugService, 
+                  IImageService imageService)
         {
             _context = context;
             _postService = postService;
             _BlogService = blogService;
+            _slugService = slugService;
+            _imageService = imageService;
         }
         #endregion
 
@@ -73,12 +80,47 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus")] Post post)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post, List<string> tagValues)
         {
             if (ModelState.IsValid)
             {
-
                 post.Created = DateTime.UtcNow;
+
+                var authorId = "3016daea-bc0d-4df0-bb9d-b2199591bcc1"; // _userManager.GetUserId(User);
+                post.BlogUserId = authorId;
+
+                // Use the _imageService to store user image
+                post.ImageData = await _imageService.EncodeImageAsync(post.Image);
+                post.ImageType = _imageService.ContentType(post.Image);
+
+                // Create the slug and determine if it's unique
+                var slug = _slugService.UrlFriendly(post.Title);
+
+                // Create variable to store whether an error has occurred
+                var validationError = false;
+
+                // Using else if to avoid collisions, so 2 different errors don't show up for the same property
+                if (string.IsNullOrEmpty(slug))
+                {
+                    ModelState.AddModelError("", "The Title you provided cannot be used as it results in an empty slug.");
+                    validationError = true;
+                }
+                else if (!_slugService.IsUnique(slug))
+                {
+                    // Add model state err and return the user back to the create view
+                    ModelState.AddModelError("Title", "The Title you provided cannot be used as it must be unique.");
+                    validationError = true;
+                }
+
+                if (validationError)
+                {
+                    // return the user back to the Create view
+                    ViewData["TagValues"] = string.Join(",", tagValues);
+                    ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name");
+                    return View(post);
+                }
+
+                post.Slug = slug;
 
                 await _postService.AddNewPostAsync(post);
 

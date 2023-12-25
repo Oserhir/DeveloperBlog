@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<TheBlogProject.Models.Post>
 
+@using TheBlogProject.Services.Interfaces
+@inject IImageService imageService
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -72,12 +75,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Slug)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageType)
-            </td>
+                   <td>
+                      <img class="img-fluid" width="200px" src="@imageService.DecodeImage(item.ImageData, item.ImageType)"/>
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Blog.Name)
             </td>
