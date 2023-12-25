@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -73,7 +74,7 @@ namespace TheBlogProject.Controllers
             return View();
         }
         #endregion
-
+        [Authorize]
         #region // POST: Posts/Create
         // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -86,7 +87,7 @@ namespace TheBlogProject.Controllers
             {
                 post.Created = DateTime.UtcNow;
 
-                var authorId = "3016daea-bc0d-4df0-bb9d-b2199591bcc1"; // _userManager.GetUserId(User);
+                var authorId =  _userManager.GetUserId(User);
                 post.BlogUserId = authorId;
 
                 // Use the _imageService to store user image

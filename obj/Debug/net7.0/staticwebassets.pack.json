@@ -5,6 +5,22 @@
       "PackagePath": "staticwebassets\\TheBlogProject.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.eot",
+      "PackagePath": "staticwebassets\\css\\font\\summernote.eot"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.ttf",
+      "PackagePath": "staticwebassets\\css\\font\\summernote.ttf"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.woff",
+      "PackagePath": "staticwebassets\\css\\font\\summernote.woff"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.woff2",
+      "PackagePath": "staticwebassets\\css\\font\\summernote.woff2"
+    },
+    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\styles.css",
       "PackagePath": "staticwebassets\\css\\styles.css"
     },
