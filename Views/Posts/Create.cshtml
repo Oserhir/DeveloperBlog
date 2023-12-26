@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create"   enctype="multipart/form-data"     >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -43,39 +43,14 @@
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
 
-            @*
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Updated" class="control-label"></label>
-                <input asp-for="Updated" class="form-control" />
-                <span asp-validation-for="Updated" class="text-danger"></span>
-            </div> *@
+            
             <div class="form-group">
                 <label asp-for="ReadyStatus" class="control-label"></label>
                 <select asp-for="ReadyStatus" asp-validation-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="text-danger"></select>
                 <span   asp-validation-for="ReadyStatus" class="text-danger"></span>
             </div>
 
-            @* 
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageData" class="control-label"></label>
-                <input asp-for="ImageData" class="form-control" />
-                <span asp-validation-for="ImageData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageType" class="control-label"></label>
-                <input asp-for="ImageType" class="form-control" />
-                <span asp-validation-for="ImageType" class="text-danger"></span>
-            </div> *@
+        
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

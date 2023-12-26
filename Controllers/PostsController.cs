@@ -23,14 +23,15 @@ namespace TheBlogProject.Controllers
         private readonly IImageService _imageService;
 
         #region Constructor
-        public PostsController(ApplicationDbContext context, IPostService postService, IBlogService blogService, ISlugService slugService, 
-                  IImageService imageService)
+        public PostsController(ApplicationDbContext context, IPostService postService, IBlogService blogService, ISlugService slugService,
+                  IImageService imageService, UserManager<BTUser> userManager)
         {
             _context = context;
             _postService = postService;
             _BlogService = blogService;
             _slugService = slugService;
             _imageService = imageService;
+            _userManager = userManager;
         }
         #endregion
 
@@ -63,18 +64,18 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
+        [Authorize]
         #region // GET: Posts/Create
         // GET: Posts/Create
         public async Task<IActionResult> Create(int? id)
         {
 
             ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name");
-            //ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
 
             return View();
         }
         #endregion
-        [Authorize]
+        
         #region // POST: Posts/Create
         // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -165,12 +166,17 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post,
+                    IFormFile newImage )
         {
+            // err need fix : newImage
+
             if (id == null)
             {
                 return NotFound();
             }
+
+            var errors = ViewData.ModelState.Where(n => n.Value.Errors.Count > 0).ToList();
 
             if (ModelState.IsValid)
             {
@@ -185,7 +191,34 @@ namespace TheBlogProject.Controllers
                     newPost.Content = post.Content;
                     newPost.ReadyStatus = post.ReadyStatus;
 
-                    await _postService.UpdatePostAsync(newPost);
+                    var newSlug = _slugService.UrlFriendly(post.Title);
+                    // newPost.Slug is really the old slug
+                    if (newSlug != newPost.Slug)
+                    {
+                        if (_slugService.IsUnique(newSlug))
+                        {
+                            newPost.Title = post.Title;
+                            newPost.Slug = newSlug;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Title", "This Title cannot be used as it results in a duplicate slug");
+                            //ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
+                            return View(post);
+                        }
+                    }
+
+                    if (newImage is not null)
+                    {
+                        newPost.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newPost.ImageType = _imageService.ContentType(newImage);
+                    }
+
+                    // await _postService.UpdatePostAsync(newPost);
+
+                    // save specific changes
+                    await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -200,8 +233,11 @@ namespace TheBlogProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+
             ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name", post.BlogId);
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
+
             return View(post);
         }
         #endregion

@@ -65,7 +65,7 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
-        //[Authorize]
+        [Authorize]
         #region // GET: Blogs/Create
         // GET: Blogs/Create
         public IActionResult Create()
@@ -87,9 +87,9 @@ namespace TheBlogProject.Controllers
                 blog.Created = DateTime.UtcNow;
                 blog.BlogUserId = _userManager.GetUserId(User);
 
-                blog.ImageType = _imageService.ContentType(blog.Image);
                 blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
-
+                blog.ImageType = _imageService.ContentType(blog.Image);
+               
                 //...
 
                 await _blogService.AddNewBlogAsync(blog);
@@ -101,6 +101,7 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
+        [Authorize]
         #region // GET: Blogs/Edit/5
         // GET: Blogs/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -128,8 +129,12 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( [Bind("Id,Name,Description")] Blog blog )
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile newImage)
         {
+            if (id != blog.Id)
+            {
+                return NotFound();
+            }
 
             if (ModelState.IsValid)
             {
@@ -149,10 +154,15 @@ namespace TheBlogProject.Controllers
                         newblog.Description = blog.Description;
                     }
 
-                    //..
+                    if (newImage is not null)
+                    {
+                        newblog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newblog.ImageType = _imageService.ContentType(newImage);
+                    }
 
-                    await _blogService.UpdateBlogAsync(newblog);
-                  
+                    // await _blogService.UpdateBlogAsync(newblog);
+                    await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
