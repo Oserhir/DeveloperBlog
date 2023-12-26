@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\TheBlogProject.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\Custom.css",
+      "PackagePath": "staticwebassets\\css\\Custom.css"
+    },
+    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.eot",
       "PackagePath": "staticwebassets\\css\\font\\summernote.eot"
     },
@@ -33,12 +37,16 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\defaultUserImage.png",
-      "PackagePath": "staticwebassets\\images\\defaultUserImage.png"
-    },
-    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\home-bg.jpg",
       "PackagePath": "staticwebassets\\images\\home-bg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\defaultUserImage.png",
+      "PackagePath": "staticwebassets\\img\\defaultUserImage.png"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\Custom.js",
+      "PackagePath": "staticwebassets\\js\\Custom.js"
     },
     {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\scripts.js",

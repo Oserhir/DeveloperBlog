@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6iPGDLDbKKIPAsTBM71ELl+d9jQEHIRuxH14j2rWVRQ=",
+  "Hash": "FR8JnMGAcygoECybhoY6+LlJ1ICF3v+h2bVfJIYRvuY=",
   "Source": "TheBlogProject",
   "BasePath": "_content/TheBlogProject",
   "Mode": "Default",
@@ -1071,6 +1071,23 @@
       "OriginalItemSpec": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\TheBlogProject.bundle.scp.css"
     },
     {
+      "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\Custom.css",
+      "SourceId": "TheBlogProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\",
+      "BasePath": "_content/TheBlogProject",
+      "RelativePath": "css/Custom.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Custom.css"
+    },
+    {
       "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.eot",
       "SourceId": "TheBlogProject",
       "SourceType": "Discovered",
@@ -1190,23 +1207,6 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\defaultUserImage.png",
-      "SourceId": "TheBlogProject",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\",
-      "BasePath": "_content/TheBlogProject",
-      "RelativePath": "images/defaultUserImage.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\defaultUserImage.png"
-    },
-    {
       "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\home-bg.jpg",
       "SourceId": "TheBlogProject",
       "SourceType": "Discovered",
@@ -1222,6 +1222,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\home-bg.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\defaultUserImage.png",
+      "SourceId": "TheBlogProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\",
+      "BasePath": "_content/TheBlogProject",
+      "RelativePath": "img/defaultUserImage.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\defaultUserImage.png"
+    },
+    {
+      "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\Custom.js",
+      "SourceId": "TheBlogProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\",
+      "BasePath": "_content/TheBlogProject",
+      "RelativePath": "js/Custom.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Custom.js"
     },
     {
       "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\scripts.js",

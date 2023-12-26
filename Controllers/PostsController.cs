@@ -126,6 +126,20 @@ namespace TheBlogProject.Controllers
 
                 await _postService.AddNewPostAsync(post);
 
+
+                // Loop over incoming list of string
+                foreach (var tagText in tagValues)
+                {
+                    _context.Add(new Tag()
+                    {
+                        PostId = post.Id,
+                        BlogUserId = authorId,
+                        Text = tagText
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
