@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TheBlogProject.Models;
+using TheBlogProject.Services.Interfaces;
 
 namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
 {
@@ -17,13 +18,16 @@ namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BTUser> _userManager;
         private readonly SignInManager<BTUser> _signInManager;
+        private readonly IImageService _imageService;
 
         public IndexModel(
             UserManager<BTUser> userManager,
-            SignInManager<BTUser> signInManager)
+            SignInManager<BTUser> signInManager,
+            IImageService imageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _imageService = imageService;
         }
 
         /// <summary>
@@ -32,6 +36,7 @@ namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public string Username { get; set; }
 
+        public string CurrentImage { get; set; }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -59,6 +64,8 @@ namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            public IFormFile Image { get; set; }
         }
 
         private async Task LoadAsync(BTUser user)
@@ -67,6 +74,7 @@ namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
+            CurrentImage = _imageService.DecodeImage(user.ImageData, user.ImageType);
 
             Input = new InputModel
             {
@@ -109,6 +117,14 @@ namespace TheBlogProject.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            // If the user selects a new image, then update profile
+            if (Input.Image is not null)
+            {
+                user.ImageData = await _imageService.EncodeImageAsync(Input.Image);
+                user.ImageType = _imageService.ContentType(Input.Image);
+                await _userManager.UpdateAsync(user);
             }
 
             await _signInManager.RefreshSignInAsync(user);

@@ -32,6 +32,7 @@ namespace TheBlogProject.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
         private readonly IImageService _imageService;
+        private readonly IConfiguration _configuration;
 
         private readonly IBlogEmailSender _emailSender;
 
@@ -41,7 +42,8 @@ namespace TheBlogProject.Areas.Identity.Pages.Account
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
             IBlogEmailSender emailSender,
-            IImageService imageService)
+            IImageService imageService,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -50,6 +52,7 @@ namespace TheBlogProject.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _imageService = imageService;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -147,11 +150,13 @@ namespace TheBlogProject.Areas.Identity.Pages.Account
                     DisplayName = Input.DisplayName,
                     UserName = Input.Email,
                     Email = Input.Email,
-                    //ImageData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
-                    //           await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"]),
-                    //ImageType = Input.ImageFile is null ?
-                    //           Path.GetExtension(_configuration["DefaultUserImage"]) :
-                    //           _imageService.ContentType(Input.ImageFile)
+                    ImageData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
+                               await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"]), // if he didn't select image use a default image
+                    ImageType = Input.ImageFile is null ?
+                               Path.GetExtension(_configuration["DefaultUserImage"]) :
+                               _imageService.ContentType(Input.ImageFile)
+
+                    
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

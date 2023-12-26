@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vvnD7uIFrCxwyytjicgkieNSEGayUPOvCGpe8Qm6N3g=",
+  "Hash": "6iPGDLDbKKIPAsTBM71ELl+d9jQEHIRuxH14j2rWVRQ=",
   "Source": "TheBlogProject",
   "BasePath": "_content/TheBlogProject",
   "Mode": "Default",
@@ -1188,6 +1188,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\defaultUserImage.png",
+      "SourceId": "TheBlogProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\",
+      "BasePath": "_content/TheBlogProject",
+      "RelativePath": "images/defaultUserImage.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\defaultUserImage.png"
     },
     {
       "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\home-bg.jpg",

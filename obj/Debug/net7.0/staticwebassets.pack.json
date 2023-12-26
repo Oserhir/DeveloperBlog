@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\defaultUserImage.png",
+      "PackagePath": "staticwebassets\\images\\defaultUserImage.png"
+    },
+    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\home-bg.jpg",
       "PackagePath": "staticwebassets\\images\\home-bg.jpg"
     },
