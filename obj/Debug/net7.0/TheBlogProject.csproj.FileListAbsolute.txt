@@ -10,6 +10,7 @@ C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Azure.Core.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Azure.Identity.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Humanizer.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\JetBrains.Annotations.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\MailKit.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -91,6 +92,9 @@ C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\System.Security.Cry
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\System.Security.Permissions.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\X.PagedList.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\X.PagedList.Mvc.Core.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\X.PagedList.Web.Common.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\af\Humanizer.resources.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\ar\Humanizer.resources.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\bin\Debug\net7.0\az\Humanizer.resources.dll

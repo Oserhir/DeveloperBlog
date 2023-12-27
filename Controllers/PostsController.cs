@@ -8,8 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TheBlogProject.Data;
+using TheBlogProject.Enums;
 using TheBlogProject.Models;
+using TheBlogProject.Services;
 using TheBlogProject.Services.Interfaces;
+using X.PagedList;
 
 namespace TheBlogProject.Controllers
 {
@@ -21,10 +24,11 @@ namespace TheBlogProject.Controllers
         private readonly ISlugService _slugService;
         private readonly UserManager<BTUser> _userManager;
         private readonly IImageService _imageService;
+        private readonly BlogSearchService _blogSearchService;
 
         #region Constructor
         public PostsController(ApplicationDbContext context, IPostService postService, IBlogService blogService, ISlugService slugService,
-                  IImageService imageService, UserManager<BTUser> userManager)
+                  IImageService imageService, UserManager<BTUser> userManager, BlogSearchService blogSearchService)
         {
             _context = context;
             _postService = postService;
@@ -32,6 +36,49 @@ namespace TheBlogProject.Controllers
             _slugService = slugService;
             _imageService = imageService;
             _userManager = userManager;
+            _blogSearchService = blogSearchService;
+        }
+        #endregion
+
+
+        #region Blog Post Index
+        // BlogPostIndex
+        public async Task<IActionResult> BlogPostIndex(int? id, int? page)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var pageNumber = page ?? 1;
+            var pageSize = 2;
+
+            var blog = _context.Blogs.Where(b => b.Id == id).FirstOrDefault();
+
+            var posts = _context.Posts
+                .Where(p => p.BlogId == id && p.ReadyStatus == Enums.ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            //ViewData["HeaderImage"] = _imageService.DecodeImage(blog.ImageData, blog.ImageType);
+            //ViewData["MainText"] = blog.Name;
+            //ViewData["SubText"] = blog.Description;
+
+            return View(await posts);
+
+        }
+        #endregion
+
+        #region Search Index
+        public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
+        {
+            ViewData["SearchTerm"] = searchTerm;
+
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+            var posts =  _blogSearchService.Search(searchTerm);
+
+            return View(await posts.ToPagedListAsync(pageNumber, pageSize));
         }
         #endregion
 
@@ -217,7 +264,7 @@ namespace TheBlogProject.Controllers
                         else
                         {
                             ModelState.AddModelError("Title", "This Title cannot be used as it results in a duplicate slug");
-                            //ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
+                            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
                             return View(post);
                         }
                     }

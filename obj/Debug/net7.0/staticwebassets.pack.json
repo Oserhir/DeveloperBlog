@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\images\\home-bg.jpg"
     },
     {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\attention.jpg",
+      "PackagePath": "staticwebassets\\img\\attention.jpg"
+    },
+    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\defaultUserImage.png",
       "PackagePath": "staticwebassets\\img\\defaultUserImage.png"
     },

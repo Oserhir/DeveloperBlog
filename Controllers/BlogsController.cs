@@ -65,9 +65,10 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
-        [Authorize]
+
         #region // GET: Blogs/Create
         // GET: Blogs/Create
+        [Authorize()]
         public IActionResult Create()
         {
             return View();

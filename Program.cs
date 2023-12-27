@@ -29,6 +29,7 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IImageService, BasicImageService>();
 builder.Services.AddScoped<ISlugService, BasicSlugService>();
+builder.Services.AddScoped<BlogSearchService>();
 
 // Register my custom DataService class
 builder.Services.AddScoped<DataService>();

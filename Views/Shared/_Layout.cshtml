@@ -19,11 +19,8 @@
          <!-- Summernote -->
         <link href="~/css/summernote-lite.min.css" rel="stylesheet" />
 
-       
-        
-    
 
-    </head>
+      </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
@@ -38,6 +35,13 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Index" >Home</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="About" >ABOUT</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"asp-controller="Home" asp-action="Contact" >CONTACT</a></li>
+                        
+                         @if (User.IsInRole("Administrator"))
+                            {
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="AdminTools">Admin Tools</a></li>
+                          }
+
+
                     </ul>
                 </div>
 
@@ -58,6 +62,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row justify-content-center mx-1">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <form asp-action="SearchIndex" asp-controller="Posts">
+                            <div class="input-group mt-5">
+                                <input type="text" name="SearchTerm" class="form-control text-search" placeholder="Search Term">
+                                <div class="input-group-append">
+                                    <button class="btn btn-warning btn-block btn-sm btn-search" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
         </header>
         <!-- Main Content-->
         <div class="container px-4 px-lg-5">

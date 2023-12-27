@@ -1,0 +1,75 @@
+﻿﻿@using TheBlogProject.Models
+@using TheBlogProject.Services.Interfaces
+@using TheBlogProject.Enums
+@using Microsoft.AspNetCore.Identity
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@inject IImageService imageService
+@inject UserManager<BTUser> _userManager
+
+@model IPagedList<Post>
+
+@{
+    ViewData["Title"] = "Search";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              Title
+            </th>
+            <th>
+               Abstract
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abstract)
+                </td>
+
+                <td>
+                     <img class="img-fluid" width="200px" src="@imageService.DecodeImage(item.ImageData, item.ImageType)"/>
+                </td>
+
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<!-- Add paging controls here-->
+<div class="row">
+    <div class="col h3">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+</div>
+
+
+@*<div class="row">
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("AllPostIndex", new { page = page}),
+        new PagedListRenderOptionsBase
+        {
+            LiElementClasses = new string[] { "page-item"},
+            PageClasses = new string[] { "page-link"}
+        })
+    </div>
+</div>*@
