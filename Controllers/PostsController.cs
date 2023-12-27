@@ -167,7 +167,7 @@ namespace TheBlogProject.Controllers
             }
 
             ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name", post.BlogId);
-            //ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
+            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
 
             return View(post);
         }
@@ -181,7 +181,7 @@ namespace TheBlogProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post,
-                    IFormFile newImage )
+                    IFormFile newImage, List<string> tagValues) // name of selectlist tagValues has to match, important!
         {
             // err need fix : newImage
 
@@ -229,6 +229,20 @@ namespace TheBlogProject.Controllers
                     }
 
                     // await _postService.UpdatePostAsync(newPost);
+
+                    // Remove all Tags previously associated with this post
+                    _context.Tags.RemoveRange(newPost.Tags);
+
+                    // Add new tags from the form
+                    foreach (var tagText in tagValues)
+                    {
+                        _context.Add(new Tag()
+                        {
+                            PostId = post.Id,
+                            BlogUserId = newPost.BlogUserId,
+                            Text = tagText
+                        });
+                    }
 
                     // save specific changes
                     await _context.SaveChangesAsync();
