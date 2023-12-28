@@ -1,63 +1,79 @@
-﻿
+﻿﻿@using TheBlogProject.Enums
 @using TheBlogProject.Services.Interfaces
-@inject IImageService imageService
-
+@using TheBlogProject.Models
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
-@model IPagedList<TheBlogProject.Models.Post>
+@inject IImageService _imageService
+@inject UserManager<BTUser> _userManager
+
+@model IPagedList<Post>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Image
-            </th>
-            <th>
-               Title
-            </th>
-            <th>
-               Abstract
-            </th>
-      
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+<div class="row ms-1 me-1 justify-content-center">
+    @foreach (var post in Model)
+    {
+        // Is the logged in user the Author of the post?
+        var isAuthor = false;
+        if (User.Identity.IsAuthenticated)
         {
-            <tr>
-        
-                <td>
-                   <img class="img-fluid" width="200px" src="@imageService.DecodeImage(item.ImageData, item.ImageType)"/>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Abstract)
-                </td>
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            isAuthor = (post.BlogUserId == _userManager.GetUserId(User));
         }
-    </tbody>
-</table>
+
+        var image = _imageService.DecodeImage(post.ImageData, post.ImageType);
+        if (image == null)
+        {
+            image = ViewData["HeaderImage"] as string;
+        }
+
+            <div class="col-12 col-md-6 col-lg-4 mt-4">
+                <div class="card border-dark bg-transparent shadow">
+
+                    <div class="card-img" style="background-image: url(@image)">
+                        <div class="container position-relative px-4">
+                            <div class="bg-post-title text-center">
+                                <hr class="card-hr">
+                                <h5 class="card-title text-light">@post.Title</h5>
+                                <hr class="card-hr">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-4 text-center">
+                        <div>
+                            <div class="card-text">@post.Abstract <br /> - </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a class="btn btn-dark btn-sm btn-block mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">
+                                Read More
+                            </a>
+                        </div>
+
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()) || isAuthor)
+                    {
+                                <div class="text-center">
+                                    <a class="btn btn-dark btn-sm btn-block mb-2" asp-action="Edit" asp-controller="Posts" asp-route-slug="@post.Slug">
+                                        Edit Post
+                                    </a>
+                                </div>
+                    }
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Need to format string here since value is nullable-->
+        @* string formattedDate = @blog.Created.HasValue ? @blog.Created.Value.ToString("dd-MMM-yyyy") : "<not available>";*@
+
+    }
+
+ </div>
 
 <hr />
 

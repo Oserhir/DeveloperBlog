@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,13 +17,16 @@ namespace TheBlogProject.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ICommentService _comment;
         private readonly IPostService _postServer;
+        private readonly UserManager<BTUser> _userManager;
 
         #region Constructor
-        public CommentsController(ApplicationDbContext context, ICommentService comment, IPostService postServer)
+        public CommentsController(ApplicationDbContext context, ICommentService comment, IPostService postServer,
+            UserManager<BTUser> userManager)
         {
             _context = context;
             _comment = comment;
             _postServer = postServer;
+            _userManager = userManager;
         }
         #endregion
 
@@ -92,12 +96,15 @@ namespace TheBlogProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.BlogUserId = _userManager.GetUserId(User);
                 comment.Created = DateTime.UtcNow;
+
 
                 await _comment.AddNewCommentAsync(comment);
 
-                return RedirectToAction("Index", "Home");
-               
+                // return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Posts", new { id = comment.PostId }, "commentSection");
+
             }
 
             return View(comment);
@@ -136,6 +143,7 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Body")] Comment comment)
         {
+            // need fix comment.Id always = 3
             if (id != comment.Id)
             {
                 return NotFound();
@@ -143,15 +151,17 @@ namespace TheBlogProject.Controllers
 
             if (ModelState.IsValid)
             {
+                Comment newComment = await _comment.GetCommentByIdAsync(id);
+
                 try
                 {
-
-                    Comment newComment = await _comment.GetCommentByIdAsync(id);
+                                    
 
                     newComment.Body = comment.Body;
                     newComment.Updated = DateTime.UtcNow;
-
-                    await _comment.UpdateCommentAsync(newComment);
+                    
+                    await _context.SaveChangesAsync();
+                    //await _comment.UpdateCommentAsync(newComment);
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -165,7 +175,9 @@ namespace TheBlogProject.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+               // return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug }, "commentSection");
+                return RedirectToAction("Details", "Posts", new { id = newComment.Id }, "commentSection");
+                // https://localhost:7042/Posts/Details?slug=typescript-4-getting-started#commentSection
             }
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
             ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
@@ -200,7 +212,8 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comment = await _comment.GetCommentByIdAsync(id);
+            // need fix id always = 3
+            var comment = await _context.Comments.FindAsync(id);
 
             if (comment != null)
             {
@@ -208,8 +221,55 @@ namespace TheBlogProject.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //  return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Comments");
+      
         }
+        #endregion
+
+        #region Moderate
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Administrator,Moderator")]
+        public async Task<IActionResult> Moderate(int id, [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var newComment = await _context.Comments.Include(c => c.Post).FirstOrDefaultAsync(c => c.Id == comment.Id);
+                try
+                {
+                    newComment.ModeratedBody = comment.ModeratedBody;
+                    newComment.ModerationType = comment.ModerationType;
+
+                    newComment.Moderated = DateTime.UtcNow;
+                    newComment.ModeratorId = _userManager.GetUserId(User);
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CommentExists(comment.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+               // return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug }, "commentSection");
+                return RedirectToAction("Details", "Posts", new { id = newComment.Post.Id }, "commentSection");
+            }
+
+            return View(comment);
+        }
+
         #endregion
 
         #region CommentExists

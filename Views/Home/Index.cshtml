@@ -1,7 +1,13 @@
-﻿@using TheBlogProject.Models
+﻿﻿@using TheBlogProject.Enums
+@using TheBlogProject.Models
+@using TheBlogProject.Services.Interfaces
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
+
+@inject IImageService _imageService
+@inject UserManager<BTUser> _userManager
 
 @model IPagedList<Blog>
 
@@ -9,32 +15,75 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row gx-4 gx-lg-5 justify-content-center">
-  <div class="col-md-10 col-lg-8 col-xl-7">
+<div class="row ms-1 me-1 justify-content-center">
+
+    <div class="row justify-content-center">
+        @*<div class="col-sm-12 col-md-6 col-lg-4"></div>*@
+        <div class="col-sm-12 col-md-6 col-lg-4 mt-2 text-center">
+            <a class="btn btn-dark btn-sm btn-block bg-secondary shadow mb-2" asp-action="AllPostIndex" asp-controller="Posts">
+                View All Posts
+            </a>
+        </div>
+    </div>
 
     @foreach (var blog in Model)
     {
-    <!-- Post preview-->
-    <div class="post-preview">
-        <a lock mb-2" asp-action="BlogPostIndex"  asp-controller = "Posts" asp-route-id="@blog.Id">
-        <h2 class="post-title">
-            @blog.Name
-        </h2>
-        <h3 class="post-subtitle">
-              @blog.Description
-        </h3>
-      </a>
-      <p class="post-meta">
-        Posted by
-        <a href="#!"> @blog.BlogUser.FullName  </a>
-        on @blog.Created
-      </p>
-    </div>
-    <!-- Divider-->
-    <hr class="my-4" />
+            <div class="col-12 col-md-6 col-lg-4 mt-4">
+                <div class="card border-dark bg-transparent shadow">
+                    <div class="card-img" style="background-image: url(@_imageService.DecodeImage(blog.ImageData, blog.ImageType))">
+                        <div class="container position-relative px-4">
+                            <div class="bg-blog-title text-center">
+                                <hr class="card-hr">
+                                <h5 class="card-title text-light">@blog.Name</h5>
+                                <hr class="card-hr">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-4 text-center">
+                        <div>
+                            <div class="card-text cftooltip"
+                             data-toggle="tooltip"
+                             data-placement="top"
+                             title=""
+                             data-original-title="@blog.Description">
+                            @blog.Description <br /> -
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a class="btn btn-dark btn-sm btn-block mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.Id">
+                                Read Posts
+                            </a>
+                        </div>
+
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                                <div class="text-center">
+                                    <a class="btn btn-dark btn-sm btn-block mb-2" asp-action="Create" asp-controller="Posts" asp-route-id="@blog.Id">
+                                        Create Post
+                                    </a>
+                                </div>
+                    }
+
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                                <div class="text-center">
+                                    <a class="btn btn-dark btn-sm btn-block mb-2" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.Id">
+                                        Edit Blog
+                                    </a>
+                                </div>
+                    }
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Need to format string here since value is nullable-->
+        @* string formattedDate = @blog.Created.HasValue ? @blog.Created.Value.ToString("dd-MMM-yyyy") : "<not available>";*@
+
     }
-  
-  </div>
+
 </div>
 
 
@@ -44,7 +93,6 @@
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     </div>
 </div>
-
 @*<div class="row">
     <div class="col">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page}),
@@ -55,3 +103,21 @@
         })
     </div>
 </div>*@
+
+@*@section Scripts {
+    <script>
+    var swalMsg = '@TempData["SweetAlert"]'
+    if (swalMsg != "") {
+    Swal.fire({
+    icon: 'success',
+    title: swalMsg,
+    timer: 2500
+    })
+    }
+
+    $(document).ready(function () {
+    $("p").tooltip();
+    });
+
+    </script>
+    }*@

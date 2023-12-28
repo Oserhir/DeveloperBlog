@@ -33,8 +33,9 @@ namespace TheBlogProject.Services
 
                 .Include(p => p.Blog )
                 .Include(p => p.Tags)
-                .Include(p => p.Comments)
                 .Include(p => p.BlogUser)
+                .Include(p => p.Comments)
+                .ThenInclude( c=> c.BlogUser )
 
                 .FirstOrDefaultAsync(p => p.Id == PostId);
 

@@ -107,6 +107,10 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
+            ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData,post.ImageType);
+            ViewData["MainText"] = post.Title;
+            ViewData["SubText"] = post.Abstract;
+
             return View(post);
         }
         #endregion
