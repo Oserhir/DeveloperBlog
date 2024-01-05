@@ -5,8 +5,20 @@
       "PackagePath": "staticwebassets\\TheBlogProject.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\Custom.css",
-      "PackagePath": "staticwebassets\\css\\Custom.css"
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\animate.min.css",
+      "PackagePath": "staticwebassets\\css\\animate.min.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\default.css",
+      "PackagePath": "staticwebassets\\css\\default.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\flaticon.css",
+      "PackagePath": "staticwebassets\\css\\flaticon.css"
     },
     {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\font\\summernote.eot",
@@ -25,20 +37,132 @@
       "PackagePath": "staticwebassets\\css\\font\\summernote.woff2"
     },
     {
-      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\styles.css",
-      "PackagePath": "staticwebassets\\css\\styles.css"
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\fontawesome-all.min.css",
+      "PackagePath": "staticwebassets\\css\\fontawesome-all.min.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\magnific-popup.css",
+      "PackagePath": "staticwebassets\\css\\magnific-popup.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\responsive.css",
+      "PackagePath": "staticwebassets\\css\\responsive.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\slick.css",
+      "PackagePath": "staticwebassets\\css\\slick.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\summernote-lite.min.css",
       "PackagePath": "staticwebassets\\css\\summernote-lite.min.css"
     },
     {
-      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\favicon.ico",
-      "PackagePath": "staticwebassets\\favicon.ico"
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\css\\swiper-bundle.css",
+      "PackagePath": "staticwebassets\\css\\swiper-bundle.css"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-brands-400.eot",
+      "PackagePath": "staticwebassets\\fonts\\fa-brands-400.eot"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-brands-400.svg",
+      "PackagePath": "staticwebassets\\fonts\\fa-brands-400.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\fonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-brands-400.woff",
+      "PackagePath": "staticwebassets\\fonts\\fa-brands-400.woff"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\fonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-regular-400.eot",
+      "PackagePath": "staticwebassets\\fonts\\fa-regular-400.eot"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-regular-400.svg",
+      "PackagePath": "staticwebassets\\fonts\\fa-regular-400.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-regular-400.ttf",
+      "PackagePath": "staticwebassets\\fonts\\fa-regular-400.ttf"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-regular-400.woff",
+      "PackagePath": "staticwebassets\\fonts\\fa-regular-400.woff"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\fonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-solid-900.eot",
+      "PackagePath": "staticwebassets\\fonts\\fa-solid-900.eot"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-solid-900.svg",
+      "PackagePath": "staticwebassets\\fonts\\fa-solid-900.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-solid-900.ttf",
+      "PackagePath": "staticwebassets\\fonts\\fa-solid-900.ttf"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-solid-900.woff",
+      "PackagePath": "staticwebassets\\fonts\\fa-solid-900.woff"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\fonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\flaticon.eot",
+      "PackagePath": "staticwebassets\\fonts\\flaticon.eot"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\flaticon.scss",
+      "PackagePath": "staticwebassets\\fonts\\flaticon.scss"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\flaticon.svg",
+      "PackagePath": "staticwebassets\\fonts\\flaticon.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\flaticon.ttf",
+      "PackagePath": "staticwebassets\\fonts\\flaticon.ttf"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\flaticon.woff",
+      "PackagePath": "staticwebassets\\fonts\\flaticon.woff"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\fonts\\flaticon.woff2",
+      "PackagePath": "staticwebassets\\fonts\\flaticon.woff2"
     },
     {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\home-bg.jpg",
       "PackagePath": "staticwebassets\\images\\home-bg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\keyboard-bg.jpg",
+      "PackagePath": "staticwebassets\\images\\keyboard-bg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\mac-bg.jpg",
+      "PackagePath": "staticwebassets\\images\\mac-bg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\Os-Fav-Dark.svg",
+      "PackagePath": "staticwebassets\\img\\Os-Fav-Dark.svg"
     },
     {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\attention.jpg",
@@ -49,16 +173,104 @@
       "PackagePath": "staticwebassets\\img\\defaultUserImage.png"
     },
     {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon01.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon01.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon02.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon02.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon03.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon03.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon04.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon04.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon05.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon05.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon06.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon06.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\coin_icon07.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\coin_icon07.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\contact_icon01.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\contact_icon01.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\contact_icon02.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\contact_icon02.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\contact_icon03.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\contact_icon03.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\right_icon.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\right_icon.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\icon\\trending_icon.svg",
+      "PackagePath": "staticwebassets\\img\\icon\\trending_icon.svg"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\logo\\NUHEALTH-Logo.png",
+      "PackagePath": "staticwebassets\\img\\logo\\NUHEALTH-Logo.png"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\logo\\logo.png",
+      "PackagePath": "staticwebassets\\img\\logo\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\img\\logo\\w_logo.png",
+      "PackagePath": "staticwebassets\\img\\logo\\w_logo.png"
+    },
+    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\Custom.js",
       "PackagePath": "staticwebassets\\js\\Custom.js"
     },
     {
-      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\scripts.js",
-      "PackagePath": "staticwebassets\\js\\scripts.js"
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\ajax-form.js",
+      "PackagePath": "staticwebassets\\js\\ajax-form.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\jquery.magnific-popup.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery.magnific-popup.min.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\main.js",
+      "PackagePath": "staticwebassets\\js\\main.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\slick.min.js",
+      "PackagePath": "staticwebassets\\js\\slick.min.js"
     },
     {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\summernote-lite.min.js",
       "PackagePath": "staticwebassets\\js\\summernote-lite.min.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\swiper-bundle.js",
+      "PackagePath": "staticwebassets\\js\\swiper-bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\vendor\\jquery-3.6.0.min.js",
+      "PackagePath": "staticwebassets\\js\\vendor\\jquery-3.6.0.min.js"
+    },
+    {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\js\\wow.min.js",
+      "PackagePath": "staticwebassets\\js\\wow.min.js"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.TheBlogProject.Microsoft.AspNetCore.StaticWebAssets.props",

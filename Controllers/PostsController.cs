@@ -51,7 +51,7 @@ namespace TheBlogProject.Controllers
             }
 
             var pageNumber = page ?? 1;
-            var pageSize = 2;
+            var pageSize = 6;
 
             var blog = _context.Blogs.Where(b => b.Id == id).FirstOrDefault();
 
@@ -75,7 +75,7 @@ namespace TheBlogProject.Controllers
             ViewData["SearchTerm"] = searchTerm;
 
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = 6;
             var posts =  _blogSearchService.Search(searchTerm);
 
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));

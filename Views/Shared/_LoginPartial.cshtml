@@ -1,26 +1,49 @@
 ﻿@using Microsoft.AspNetCore.Identity
+﻿@using TheBlogProject.Data
 @inject SignInManager<BTUser> SignInManager
 @inject UserManager<BTUser> UserManager
+@inject ApplicationDbContext _context
+
+@using TheBlogProject.Services.Interfaces
+@inject IImageService IImageService
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
+        var blogUser = _context.Users.Where(u => u.Id == UserManager.GetUserId(User)).FirstOrDefault();
+
+         <li class="header-sine-in">
+                   @*<a  asp-area="Identity" asp-page="/Account/Manage/Index"><i class="flaticon-user"></i>Hello @blogUser?.DisplayName! </a>*@
+                    <a  asp-area="Identity" asp-page="/Account/Manage/Index"><img style="border-radius: 50%; width: 16px; height: 16px;" src="@IImageService.DecodeImage( blogUser.ImageData, blogUser.ImageType)" /> Hello @blogUser?.DisplayName! </a>
+        </li>
+
+            <li class="">
+                <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button  type="submit" >Logout</button>
+                </form>
+            </li>
+
+       @*  <li class="nav-item">
+            <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @blogUser?.DisplayName!</a>
+        </li>
+        <li class="nav-item">
+            <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button  type="submit" class="nav-link btn btn-link btn-logout">Logout</button>
+            </form>
+        </li>*@
+
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <li class="header-sine-in">
+          <a asp-area="Identity" asp-page ="/Account/Login"><i class="flaticon-user"></i>Login</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+
+      @*  <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>*@
 }
 </ul>

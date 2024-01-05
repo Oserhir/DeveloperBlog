@@ -27,7 +27,7 @@ namespace TheBlogProject.Controllers
         public async Task<IActionResult> Index(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 3;
+            var pageSize = 10;
 
             var blogs = _context.Blogs
                 .Include(b => b.BlogUser)
