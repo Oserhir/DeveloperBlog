@@ -22,7 +22,7 @@
         var isAuthor = false;
         if (User.Identity.IsAuthenticated)
         {
-            isAuthor = (post.BlogUserId == _userManager.GetUserId(User));
+            isAuthor = (post.PostUserId == _userManager.GetUserId(User));
         }
 
         var image = _imageService.DecodeImage(post.ImageData, post.ImageType);

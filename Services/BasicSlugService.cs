@@ -25,6 +25,14 @@ namespace TheBlogProject.Services
         }
         #endregion
 
+        #region IsUnique
+        public bool is_unique_category_slug(string slug)
+        {
+            // Go to Db and see if any records already have the slug value
+            return !_dbContext.Categories.Any(c => c.slug == slug);
+        }
+        #endregion
+
         #region Url Friendly
         public string UrlFriendly(string title)
         {

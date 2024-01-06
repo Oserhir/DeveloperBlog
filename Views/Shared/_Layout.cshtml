@@ -13,7 +13,10 @@
         <link rel="shortcut icon" type="image/x-icon" href="~/img/Os-Fav-Dark.svg">
 
         <!-- CSS here -->
-        <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+        <!-- Latest compiled and minified CSS -->
+
+        <link rel="stylesheet" href="~/css/bs.css"> 
         <link rel="stylesheet" href="~/css/animate.min.css">
         <link rel="stylesheet" href="~/css/magnific-popup.css">
         <link rel="stylesheet" href="~/css/fontawesome-all.min.css">
@@ -65,6 +68,8 @@
                                                     @if (User.IsInRole("Administrator"))
                                                     {
                                                            <li><a asp-controller="Posts" asp-action="Create">Create Post</a></li>
+
+                                                          <li><a asp-controller="Categories" asp-action="Create">Create Category</a></li>
                                                     }
 
                                                     

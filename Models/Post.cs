@@ -9,9 +9,10 @@ namespace TheBlogProject.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Blog Name")]
-        public int BlogId { get; set; }
-        public string? BlogUserId { get; set; }
+
+        [Display(Name = "Category Name")]
+        public int? CategoryId { get; set; }
+        public string? PostUserId { get; set; }
 
         [Required]
         [StringLength(75, ErrorMessage = "The {0} must be at least {2} and no more than {1} characters long.", MinimumLength = 2)]
@@ -42,8 +43,9 @@ namespace TheBlogProject.Models
         public IFormFile? Image { get; set; }
 
         // Navgation properties
-        public virtual Blog? Blog { get; set; }  // Post is child of Blog
-        public virtual BTUser? BlogUser { get; set; }  // Post is child of Author
+        // public virtual Blog? Blog { get; set; }  // Post is child of Blog
+        public virtual Category? Category { get; set; }  
+        public virtual BTUser? PostUser { get; set; }  // Post is child of Author
 
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();  // Post is a parent to a collection of Tags
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();

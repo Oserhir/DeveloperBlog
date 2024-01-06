@@ -15,7 +15,7 @@ namespace TheBlogProject.Controllers
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ICommentService _comment;
+        private readonly ICommentService _commentServer;
         private readonly IPostService _postServer;
         private readonly UserManager<BTUser> _userManager;
 
@@ -24,7 +24,7 @@ namespace TheBlogProject.Controllers
             UserManager<BTUser> userManager)
         {
             _context = context;
-            _comment = comment;
+            _commentServer = comment;
             _postServer = postServer;
             _userManager = userManager;
         }
@@ -34,7 +34,7 @@ namespace TheBlogProject.Controllers
         // GET: Comments
         public async Task<IActionResult> OriginalIndex()
         {
-            var originalComment = _context.Comments.ToListAsync();
+            var originalComment =  _commentServer.GetAllCommentAsync();      // _context.Comments.ToListAsync();
             return View("Index" , await originalComment);
         }
         #endregion
@@ -43,18 +43,17 @@ namespace TheBlogProject.Controllers
         // GET: Comments
         public async Task<IActionResult> ModeratedIndex()
         {
-            var ModeratedComment = await _context.Comments.Where( m => m.ModeratorId != null   ).ToListAsync();
+            var ModeratedComment = _commentServer.GetModeratedComments();   // await _context.Comments.Where( m => m.ModeratorId != null   ).ToListAsync();
             return View("Index", ModeratedComment);
         }
         #endregion
-
 
         #region // GET: Comments 
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Comments.Include(p => p.BlogUser).Include(p => p.Post);
-            return View(await applicationDbContext.ToListAsync());
+            var AllComments = await _commentServer.GetAllCommentAsync();  // _context.Comments.Include(p => p.BlogUser).Include(p => p.Post);
+            return View( AllComments);
         }
         #endregion 
 
@@ -99,8 +98,7 @@ namespace TheBlogProject.Controllers
                 comment.BlogUserId = _userManager.GetUserId(User);
                 comment.Created = DateTime.UtcNow;
 
-
-                await _comment.AddNewCommentAsync(comment);
+                await _commentServer.AddNewCommentAsync(comment);
 
                 // return RedirectToAction("Index", "Home");
                 return RedirectToAction("Details", "Posts", new { id = comment.PostId }, "commentSection");
@@ -111,7 +109,7 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
-        #region // GET: Comments/Edit/5
+        #region // GET: Comments/Edit/5 -- NOO
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -120,7 +118,7 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            var comment = await _comment.GetCommentByIdAsync(id.Value);
+            var comment = await _commentServer.GetCommentByIdAsync(id.Value);
 
             if (comment == null)
             {
@@ -129,7 +127,7 @@ namespace TheBlogProject.Controllers
 
             //ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
             //ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
-            ViewData["PostId"] = new SelectList( await _postServer.GetAllPostAsync(), "Id", "Abstract", comment.PostId);
+            //ViewData["PostId"] = new SelectList( await _postServer.GetAllPostAsync(), "Id", "Abstract", comment.PostId);
 
             return View(comment);
         }
@@ -151,12 +149,10 @@ namespace TheBlogProject.Controllers
 
             if (ModelState.IsValid)
             {
-                Comment newComment = await _comment.GetCommentByIdAsync(id);
+                Comment newComment = await _commentServer.GetCommentByIdAsync(id);
 
                 try
                 {
-                                    
-
                     newComment.Body = comment.Body;
                     newComment.Updated = DateTime.UtcNow;
                     
@@ -186,7 +182,7 @@ namespace TheBlogProject.Controllers
         }
         #endregion
 
-        #region  // GET: Comments/Delete/5
+        #region  // GET: Comments/Delete/5 -- NOO
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -195,7 +191,7 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            var comment = await _comment.GetCommentByIdAsync(id.Value);
+            var comment = await _commentServer.GetCommentByIdAsync(id.Value);
 
             if (comment == null)
             {
@@ -217,17 +213,17 @@ namespace TheBlogProject.Controllers
 
             if (comment != null)
             {
-                await _comment.RemoveCommentAsync(comment);
+                await _commentServer.RemoveCommentAsync(comment);
             }
 
-            await _context.SaveChangesAsync();
-            //  return RedirectToAction(nameof(Index));
-            return RedirectToAction("Index", "Comments");
-      
+           await _context.SaveChangesAsync();
+           
+           return RedirectToAction(nameof(Index));
+
         }
         #endregion
 
-        #region Moderate
+        #region // Post: Comments/Moderate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Administrator,Moderator")]

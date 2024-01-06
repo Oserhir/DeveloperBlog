@@ -20,54 +20,26 @@ namespace TheBlogProject.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPostService _postService;
-        private readonly IBlogService _BlogService;
         private readonly ISlugService _slugService;
         private readonly UserManager<BTUser> _userManager;
         private readonly IImageService _imageService;
         private readonly BlogSearchService _blogSearchService;
+        private readonly ICategoryService _categoryService;
 
         #region Constructor
-        public PostsController(ApplicationDbContext context, IPostService postService, IBlogService blogService, ISlugService slugService,
-                  IImageService imageService, UserManager<BTUser> userManager, BlogSearchService blogSearchService)
+        public PostsController(ApplicationDbContext context, IPostService postService, ISlugService slugService,
+                  IImageService imageService, UserManager<BTUser> userManager, BlogSearchService blogSearchService, ICategoryService categoryService)
         {
             _context = context;
             _postService = postService;
-            _BlogService = blogService;
             _slugService = slugService;
             _imageService = imageService;
             _userManager = userManager;
             _blogSearchService = blogSearchService;
+            _categoryService = categoryService;
         }
         #endregion
 
-
-        #region Blog Post Index
-        // BlogPostIndex
-        public async Task<IActionResult> BlogPostIndex(int? id, int? page)
-        {
-            if (id is null)
-            {
-                return NotFound();
-            }
-
-            var pageNumber = page ?? 1;
-            var pageSize = 6;
-
-            var blog = _context.Blogs.Where(b => b.Id == id).FirstOrDefault();
-
-            var posts = _context.Posts
-                .Where(p => p.BlogId == id && p.ReadyStatus == Enums.ReadyStatus.ProductionReady)
-                .OrderByDescending(p => p.Created)
-                .ToPagedListAsync(pageNumber, pageSize);
-
-            //ViewData["HeaderImage"] = _imageService.DecodeImage(blog.ImageData, blog.ImageType);
-            //ViewData["MainText"] = blog.Name;
-            //ViewData["SubText"] = blog.Description;
-
-            return View(await posts);
-
-        }
-        #endregion
 
         #region Search Index
         public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
@@ -86,7 +58,7 @@ namespace TheBlogProject.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
+            var applicationDbContext = _context.Posts.Include(p => p.PostUser);
             return View(await applicationDbContext.ToListAsync());
         }
         #endregion
@@ -107,10 +79,6 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData,post.ImageType);
-            ViewData["MainText"] = post.Title;
-            ViewData["SubText"] = post.Abstract;
-
             return View(post);
         }
         #endregion
@@ -120,8 +88,7 @@ namespace TheBlogProject.Controllers
         // GET: Posts/Create
         public async Task<IActionResult> Create(int? id)
         {
-
-            ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(await _categoryService.GetAllCategoriesAsync(), "Id", "title");
 
             return View();
         }
@@ -133,14 +100,14 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post, List<string> tagValues)
+        public async Task<IActionResult> Create([Bind("Title,CategoryId,Abstract,Content,ReadyStatus,Image")] Post post, List<string> tagValues)
         {
             if (ModelState.IsValid)
             {
                 post.Created = DateTime.UtcNow;
 
                 var authorId =  _userManager.GetUserId(User);
-                post.BlogUserId = authorId;
+                post.PostUserId = authorId;
 
                 // Use the _imageService to store user image
                 post.ImageData = await _imageService.EncodeImageAsync(post.Image);
@@ -169,7 +136,8 @@ namespace TheBlogProject.Controllers
                 {
                     // return the user back to the Create view
                     ViewData["TagValues"] = string.Join(",", tagValues);
-                    ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name");
+                    ViewData["CategoryId"] = new SelectList(await _categoryService.GetAllCategoriesAsync(), "Id", "title");
+
                     return View(post);
                 }
 
@@ -194,8 +162,8 @@ namespace TheBlogProject.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name", post.BlogId);
-            // ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
+            ViewData["TagValues"] = string.Join(",", tagValues);
+            ViewData["CategoryId"] = new SelectList(await _categoryService.GetAllCategoriesAsync(), "Id", "title");
 
             return View(post);
         }
@@ -217,7 +185,6 @@ namespace TheBlogProject.Controllers
                 return NotFound();
             }
 
-            ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name", post.BlogId);
             ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
 
             return View(post);
@@ -231,17 +198,14 @@ namespace TheBlogProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post,
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Abstract,Content,ReadyStatus")] Post post,
                     IFormFile newImage, List<string> tagValues) // name of selectlist tagValues has to match, important!
         {
-            // err need fix : newImage
 
             if (id == null)
             {
                 return NotFound();
             }
-
-            var errors = ViewData.ModelState.Where(n => n.Value.Errors.Count > 0).ToList();
 
             if (ModelState.IsValid)
             {
@@ -250,7 +214,7 @@ namespace TheBlogProject.Controllers
                     Post newPost = await _postService.GetPostByIdAsync(id.Value);
 
                     newPost.Updated = DateTime.UtcNow;
-                    newPost.BlogId = post.BlogId;
+                    
                     newPost.Title = post.Title;
                     newPost.Abstract = post.Abstract;
                     newPost.Content = post.Content;
@@ -290,7 +254,7 @@ namespace TheBlogProject.Controllers
                         _context.Add(new Tag()
                         {
                             PostId = post.Id,
-                            BlogUserId = newPost.BlogUserId,
+                            BlogUserId = newPost.PostUserId,
                             Text = tagText
                         });
                     }
@@ -314,8 +278,8 @@ namespace TheBlogProject.Controllers
             }
 
 
-            ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name", post.BlogId);
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
+           // ViewData["BlogId"] = new SelectList(await _BlogService.GetAllBlogsAsync(), "Id", "Name", post.BlogId);
+            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.PostUserId);
 
             return View(post);
         }

@@ -22,7 +22,11 @@ namespace TheBlogProject.Services
 
         public async Task<List<Comment>> GetAllCommentAsync()
         {
-            return await _context.Comments.ToListAsync();
+            return await _context.Comments
+                .Include(p => p.BlogUser)
+                .Include(p => p.Post)
+
+                .ToListAsync();
         }
 
         public async Task<Comment> GetCommentByIdAsync(int CommentId)
@@ -34,6 +38,11 @@ namespace TheBlogProject.Services
                     .FirstOrDefaultAsync(m => m.Id == CommentId);
 
             return comment;
+        }
+
+        public async Task<List<Comment>> GetModeratedComments()
+        {
+            return await _context.Comments.Where(m => m.ModeratorId != null).ToListAsync();
         }
 
         public async Task RemoveCommentAsync(Comment comment)

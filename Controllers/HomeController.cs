@@ -26,15 +26,7 @@ namespace TheBlogProject.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            var pageNumber = page ?? 1;
-            var pageSize = 10;
-
-            var blogs = _context.Blogs
-                .Include(b => b.BlogUser)
-                .OrderByDescending(b => b.Created)
-                .ToPagedListAsync(pageNumber, pageSize);
-
-            return View(await blogs);
+            return View();
         }
 
         #region About
@@ -61,7 +53,6 @@ namespace TheBlogProject.Controllers
 
             return RedirectToAction("Index");
         }
-
 
 
         public IActionResult Privacy()

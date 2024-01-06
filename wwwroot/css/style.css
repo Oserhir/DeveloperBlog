@@ -48,7 +48,7 @@
 	1. Google Fonts
 ===============================*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap');
-232323
+
 /*=============================
 	01. Variable CSS
 ===============================*/
@@ -629,13 +629,13 @@ label {
 }
 .header-action .header-sine-in a {
     display: flex;
-     align-items: center; 
-    gap: 10px;  
+    align-items: center;
+    gap: 10px;
     font-size: 14px;
     color: var(--tg-secondary-color);
 }
 .header-action .header-sine-in {
-    margin-left: 20px;  
+    margin-left: 20px;
 }
 .header-action .header-sine-in a i {
     color: var(--tg-body-font-color);
@@ -768,7 +768,7 @@ label {
 }
 
 /* header-two */
-    .header-style-two {
+.header-style-two {
     background: #12253E;
 }
 .header-logo-area {
