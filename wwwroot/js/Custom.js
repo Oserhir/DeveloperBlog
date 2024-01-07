@@ -59,11 +59,11 @@ function ValidateComment() {
 
     // Check if message is empty or has only white spaces
     if (message.innerText.length === 0 || message.innerText.trim()) {
-        //Swal.fire('ENTER A MESSAGE!');
-        //swalWithDarkButton.fire({
-        //    html: `<span class='font-weight-bolder'>ENTER A MESSAGE!</span>`
-        //});
-        //return true;
+        Swal.fire('ENTER A MESSAGE!');
+        swalWithDarkButton.fire({
+            html: `<span class='font-weight-bolder'>ENTER A MESSAGE!</span>`
+        });
+        return true;
     }
 }
 

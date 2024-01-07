@@ -32,6 +32,7 @@ namespace TheBlogProject.Services
             Post post = await _context.Posts
 
                 .Include(p => p.Tags)
+                .Include(p => p.Category)
                 .Include(p => p.PostUser)
                 .Include(p => p.Comments)
                 .ThenInclude( c=> c.BlogUser )

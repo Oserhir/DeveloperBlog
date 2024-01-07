@@ -105,7 +105,8 @@ namespace TheBlogProject.Controllers
 
             }
 
-            return View(comment);
+            return RedirectToAction("Details", "Posts", new { id = comment.PostId }, "commentSection");
+            // return View();
         }
         #endregion
 
@@ -141,7 +142,7 @@ namespace TheBlogProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Body")] Comment comment)
         {
-            // need fix comment.Id always = 3
+            
             if (id != comment.Id)
             {
                 return NotFound();
@@ -171,8 +172,10 @@ namespace TheBlogProject.Controllers
                         throw;
                     }
                 }
+
+
                // return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug }, "commentSection");
-                return RedirectToAction("Details", "Posts", new { id = newComment.Id }, "commentSection");
+                return RedirectToAction("Details", "Posts", new { id = newComment.PostId }, "commentSection");
                 // https://localhost:7042/Posts/Details?slug=typescript-4-getting-started#commentSection
             }
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
