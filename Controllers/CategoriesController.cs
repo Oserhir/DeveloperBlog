@@ -251,7 +251,28 @@ namespace TheBlogProject.Controllers
         private bool CategoryExists(int id)
         {
             return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
-        } 
+        }
         #endregion
+
+        #region  // GET: Category/1
+        // GET: PostsByCategory/1
+        public async Task<IActionResult> Category(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var posts = await _categoryService.GetPostsByCategory(id.Value);
+
+            if (posts == null)
+            {
+                return NotFound();
+            }
+
+            return View(posts);
+        }
+        #endregion
+
     }
 }

@@ -33,5 +33,13 @@ namespace TheBlogProject.Services
             return category;
 
         }
+
+        public async Task<List<Post>> GetPostsByCategory(int CategoryId)
+        {
+            var posts = await _context.Posts
+                 .Include(p => p.Category)
+                 .Where( p => p.CategoryId == CategoryId ).ToListAsync();
+            return posts;
+        }
     }
 }

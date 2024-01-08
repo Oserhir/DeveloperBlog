@@ -7,5 +7,6 @@ namespace TheBlogProject.Services.Interfaces
         public Task AddNewCategoryAsync(Category category);
         public Task<List<Category>> GetAllCategoriesAsync();
         public Task<Category> GetCategoryByIdAsync(int CategoryId);
+        public Task<List<Post>> GetPostsByCategory(int CategoryId);
     }
 }

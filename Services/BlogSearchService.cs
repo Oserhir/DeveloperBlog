@@ -1,4 +1,5 @@
-﻿using TheBlogProject.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TheBlogProject.Data;
 using TheBlogProject.Models;
 
 namespace TheBlogProject.Services
@@ -20,7 +21,11 @@ namespace TheBlogProject.Services
         #region Search
         public IQueryable<Post> Search(string searchTerm)
         {
-            var posts = _context.Posts.Where(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady).AsQueryable();
+            var posts = _context.Posts.Where(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady)
+                .Include(p => p.Category)
+                .Include(p => p.PostUser)
+
+                .AsQueryable();
 
             if (searchTerm != null)
             {

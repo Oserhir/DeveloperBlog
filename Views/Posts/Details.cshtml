@@ -20,7 +20,7 @@
                                 <div class="blog-details-wrap">
                                     <div class="blog-details-content">
                                         <div class="blog-details-content-top">
-                                            <a href="blog.html" class="post-tag">@Model.Category.title</a>
+                                            <a asp-controller="Categories" asp-action= "Category" asp-route-id="@Model.CategoryId" class="post-tag">@Model.Category.title</a>
                                             <h2 class="title">@Model.Title</h2>
                                             <div class="bd-content-inner">
                                                 <div class="blog-post-meta">
@@ -55,7 +55,7 @@
 
                                                             @foreach(var tag in Model.Tags)
                                                             {
-                                                               <li><a href="blog.html">@tag.Text.ToUpper()</a></li>
+                                                                  <li><a  asp-action = "SearchIndex"  asp-route-searchTerm="@tag.Text.ToUpper()"   >@tag.Text.ToUpper()</a></li>
                                                             }
                                                
                                                         </ul>
@@ -151,7 +151,7 @@
                                                                  </small>
 
                                                                  <!-- Diplay Comment-->
-
+                                                                 
                                                                  @if (string.IsNullOrEmpty(@comment.Body))
                                                                 {
                                                                      <p>Comment missing.</p>
