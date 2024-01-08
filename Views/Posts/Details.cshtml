@@ -119,11 +119,12 @@
                                             <h3 class="comments-wrap-title">@Model.Comments.Count Comments</h3>
                                           }
                                         <div class="latest-comments" id ="commentSection">
-                                            <ul class="list-wrap">
-                                                <li>
+                                           
                                                 <!-- Display comments related to this post-->
                                                 @foreach(var comment in Model.Comments)
                                                 {
+                                                <ul class="list-wrap">
+                                                    <li>
                                                 <div class="comments-box">
                                                             <div class="comments-avatar">
                                                                     <img src="@imageService.DecodeImage(comment.BlogUser.ImageData, comment.BlogUser.ImageType)" alt="img">
@@ -166,36 +167,73 @@
                                                                 {
                                                                     <p><span class="small font-weight-bolder text-danger font-italic">This comment was deleted.</span></p>
                                                                 }
+                                                                
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
 
-                                                                @if(  comment.BlogUserId ==  userManager.GetUserId(User) &&  comment.Moderated is null  && comment.Deleted is null  )
+                                                                        <!--EDIT-->
+                                                                @if (comment.BlogUserId == userManager.GetUserId(User) && comment.Moderated is null && comment.Deleted is null)
                                                                 {
-                                                                     <hr />
-                                                                     <button data-bs-toggle="modal" data-bs-target="#editModal-@comment.Id"
-                                                                              class="btn-sm btn-dark float-right font-weight-bold">EDIT</button>
-                                                                    
-                                                                }
+                                                                          <button  data-bs-toggle="modal" data-bs-target="#editModal-@comment.Id"
+                                                                              class="btn btn-warning float-right font-weight-bold">EDIT</button>
+                                                                 }
 
-                                                                  
-                                                     <!-- Moderate and Delete Buttons-->
-                                                            @if ((User.IsInRole(BlogRole.Moderator.ToString())) || (User.IsInRole(BlogRole.Administrator.ToString())) && comment.Deleted is null)
-                                                            {
-                                                                <hr />
-                                                                        <div class="row">
-                                                                            <div class="col-2">
-                                                                                <button class="btn-sm btn-warning font-weight-bold btn-block" 
-                                                                                     data-bs-toggle="modal" 
-                                                                                     data-bs-target="#moderateModal-@comment.Id">MODERATE</button>
-                                                                        </div>
-                                                                            <hr />
-                                                                    <div class="col-2">
-                                                                        <form asp-action="Delete" asp-controller="Comments">
-                                                                                        @Html.Hidden("Id", comment.Id)
-                                                                                        @Html.Hidden("Slug", comment.Post.Slug)
-                                                                            <button class="btn-sm btn-danger font-weight-bold btn-block">DELETE</button>
-                                                                        </form>
+                                                                             <!-- Moderate and Delete Buttons-->
+                                                                  @if ((User.IsInRole(BlogRole.Moderator.ToString())) || (User.IsInRole(BlogRole.Administrator.ToString())) && comment.Deleted is null)
+                                                                    {
+                                                                             <button class="btn btn-primary font-weight-bold btn-block" 
+                                                                                             data-bs-toggle="modal" 
+                                                                                             data-bs-target="#moderateModal-@comment.Id">MODERATE</button>
+
+
+
+                                                                                              <button class="btn btn-danger font-weight-bold btn-block" 
+                                                                                                     data-bs-toggle="modal" 
+                                                                                                             data-bs-target="#deleteModal-@comment.Id">DELETE</button>
+    
+                                                                     }
                                                                     </div>
-                                                                </div>
-                                                             }
+
+
+
+                                                                     @*  Modals Delete  *@
+                                                                        <div class="modal" tabindex="-1" id="deleteModal-@comment.Id" >
+                                                                          <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                              <div class="modal-header">
+                                                                                <h5 class="modal-title">Are you sure you want to delete this?</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                              </div>
+                                                                              <div class="modal-body">
+                                                                                         <form asp-action="Delete" asp-controller="Comments"  method = "Post" >
+
+                                                                                            <input  name="Id" type="hidden" value="@comment.Id" />
+                                                                                            <div class="form-group">
+                                                                                                <textarea disabled name="Body" class="form-control" >@comment.Body</textarea>
+                                                                                            </div>
+
+                                                                                             <div class="modal-footer">
+                                                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                                       <form asp-action="Delete" asp-controller="Comments">
+                                                                                        <input  name="Id" type="hidden" value="@comment.Id" />
+                                                                                  
+                                                                                         <button type="submit" class="btn btn-danger" >DELETE</button>
+                                                                                    </form>
+
+                                                                              </div>
+
+                                                                        @*         <hr/>
+
+                                                                                <button class="btn-sm btn-dark border-success font-weight-bold" type="submit">SUBMIT</button>*@
+                                                                                </form>
+                                                                              </div>
+                                                                              <!--footer-->
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                    @*End Modals Edit*@
+
+
 
                                                                @*Modals Edit*@
                                                                 <div class="modal" tabindex="-1" id="editModal-@comment.Id" >
@@ -292,9 +330,11 @@
                                                                 
                                                             </div>
                                                         </div>
-                                                    }
-                                                </li>
+
+                                                          </li>
                                             </ul>
+                                                    }
+                                              
                                         </div>
                                     </div>
 

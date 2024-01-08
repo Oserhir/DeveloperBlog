@@ -220,8 +220,9 @@ namespace TheBlogProject.Controllers
             }
 
            await _context.SaveChangesAsync();
-           
-           return RedirectToAction(nameof(Index));
+
+            return RedirectToAction("Details", "Posts", new { id = comment.PostId }, "commentSection");
+            //return RedirectToAction(nameof(Index));
 
         }
         #endregion
