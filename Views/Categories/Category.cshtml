@@ -1,5 +1,11 @@
-﻿﻿@using TheBlogProject.Models
-@model IEnumerable<TheBlogProject.Models.Post>
+﻿
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+﻿@using TheBlogProject.Models
+@*@model IEnumerable<TheBlogProject.Models.Post>*@
+@model IPagedList<Post>
 
 @using TheBlogProject.Services.Interfaces
 @inject IImageService imageService
@@ -19,8 +25,9 @@
                             <div class="breadcrumb-content">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page"> </li>
+                                        <li class="breadcrumb-item"><a >Home</a></li>
+                                        <li class="breadcrumb-item"><a  >Category</a></li>
+                                        <li class="breadcrumb-item active"  aria-current=""> <a asp-controller="Categories" asp-action="Category" asp-route-id="@Model.FirstOrDefault().CategoryId">@Model.FirstOrDefault().Category.title</a> </li>
                                     </ol>
                                 </nav>
                             </div>
@@ -73,7 +80,9 @@
 
 
                                 </div>
-                                <div class="pagination-wrap mt-60">
+
+
+                             @*   <div class="pagination-wrap mt-60">
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination list-wrap">
                                             <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -84,6 +93,18 @@
                                         </ul>
                                     </nav>
                                 </div>
+                            *@
+
+                        @Html.PagedListPager(Model, page => Url.Action("Category", new { id = Model.FirstOrDefault().Category.Id ,  page = page }),
+                                        new PagedListRenderOptions
+                                        {
+                                            LiElementClasses = new string[] { "page-item" },
+                                            PageClasses = new string[] { "page-link" },
+
+                                        })
+
+
+
                             </div>
                             <div class="col-30">
                                 <div class="sidebar-wrap">

@@ -46,11 +46,13 @@ namespace TheBlogProject.Controllers
         {
             ViewData["SearchTerm"] = searchTerm;
 
-            var pageNumber = page ?? 1;
-            var pageSize = 6;
+            var pageNumber = page ?? 1; // Default to the first page if none is specified
+            var pageSize = 2;
             var posts =  _blogSearchService.Search(searchTerm);
 
-            return View(await posts.ToPagedListAsync(pageNumber, pageSize));
+            var count = posts.Count();
+
+            return View(await posts.ToPagedListAsync(pageNumber, pageSize)); //  use the ToPagedList method to convert this data into a paged list.
         }
         #endregion
 

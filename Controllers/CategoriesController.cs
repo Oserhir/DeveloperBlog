@@ -12,6 +12,7 @@ using TheBlogProject.Data;
 using TheBlogProject.Models;
 using TheBlogProject.Services;
 using TheBlogProject.Services.Interfaces;
+using X.PagedList;
 
 namespace TheBlogProject.Controllers
 {
@@ -256,21 +257,29 @@ namespace TheBlogProject.Controllers
 
         #region  // GET: Category/1
         // GET: PostsByCategory/1
-        public async Task<IActionResult> Category(int? id)
+        public async Task<IActionResult> Category(int? id, int? page)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var posts = await _categoryService.GetPostsByCategory(id.Value);
+            var pageNumber = page ?? 1;
+            var pageSize = 3;
+
+            // var posts = await _categoryService.GetPostsByCategory(id.Value);
+
+            var posts =  _context.Posts
+                 .Include(p => p.Category)
+                 .Where(p => p.CategoryId == id).ToPagedListAsync(pageNumber, pageSize);
 
             if (posts == null)
             {
                 return NotFound();
             }
 
-            return View(posts);
+            return View( await posts);
         }
         #endregion
 
