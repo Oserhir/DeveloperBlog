@@ -263,12 +263,12 @@ C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\staticwebassets\msb
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\staticwebassets.pack.json
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\staticwebassets.build.json
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\staticwebassets.development.json
-C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\scopedcss\bundle\TheBlogProject.styles.css
-C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\scopedcss\projectbundle\TheBlogProject.bundle.scp.css
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\TheBlogProject.csproj.CopyComplete
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\TheBlogProject.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\refint\TheBlogProject.dll
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\TheBlogProject.pdb
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\TheBlogProject.genruntimeconfig.cache
 C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\ref\TheBlogProject.dll
+C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\YUSSEF\source\repos\TheBlogProject\obj\Debug\net7.0\scopedcss\projectbundle\TheBlogProject.bundle.scp.css

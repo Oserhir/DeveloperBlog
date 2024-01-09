@@ -153,6 +153,10 @@
       "PackagePath": "staticwebassets\\fonts\\flaticon.woff2"
     },
     {
+      "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\Jenny.png",
+      "PackagePath": "staticwebassets\\images\\Jenny.png"
+    },
+    {
       "Id": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\home-bg.jpg",
       "PackagePath": "staticwebassets\\images\\home-bg.jpg"
     },

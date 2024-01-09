@@ -57,6 +57,7 @@ namespace TheBlogProject.Controllers
         #endregion
 
         #region // GET: Posts
+       
         // GET: Posts
         public async Task<IActionResult> Index()
         {

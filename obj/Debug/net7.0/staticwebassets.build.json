@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "cIlvICOHC54UhhTOhfx2aHTHlmp23I8+0fnP6nrF8fk=",
+  "Hash": "DOX8JuosNIaWAg9A5OVO+YUGrqHS2G/K42Drg3tJN/I=",
   "Source": "TheBlogProject",
   "BasePath": "_content/TheBlogProject",
   "Mode": "Default",
@@ -1715,6 +1715,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\home-bg.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\Jenny.png",
+      "SourceId": "TheBlogProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\",
+      "BasePath": "_content/TheBlogProject",
+      "RelativePath": "images/Jenny.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Jenny.png"
     },
     {
       "Identity": "C:\\Users\\YUSSEF\\source\\repos\\TheBlogProject\\wwwroot\\images\\keyboard-bg.jpg",
